@@ -39,7 +39,7 @@ function App() {
     // document.getElementById("text").style.color = "orange";
 
     axios.get("https://jsonplaceholder.typicode.com/posts")
-      .then(res => console.log(res))
+      .then(res => setData(res.data))
       .catch(err => console.log("customer message " + err))
 
     // fetch("https://jsonplaceholder.typicode.com/posts")
