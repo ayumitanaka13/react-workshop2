@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import './App.css';
 
-//import axios from 'axios';
+import axios from 'axios';
 
 
 function App() {
@@ -38,28 +38,32 @@ function App() {
     // document.getElementById("card").style.background = "bisque";
     // document.getElementById("text").style.color = "orange";
 
-    // axios.get("https://jsonplaceholder.typicode.com/posts")
-    //   .then(res => console.log(res))
-    //   .catch(err => console.log("customer message " + err))
-
-    fetch("https://jsonplaceholder.typicode.com/posts")
-      .then(res => res.json())
-      .then(data => setData(data))
+    axios.get("https://jsonplaceholder.typicode.com/posts")
+      .then(res => console.log(res))
       .catch(err => console.log("customer message " + err))
+
+    // fetch("https://jsonplaceholder.typicode.com/posts")
+    //   .then(res => res.json())
+    //   .then(data => setData(data))
+    //   .catch(err => console.log("customer message " + err))
   }, [])
-
-
 
   // useState with data
   const [data, setData] = useState([])
-
-
+  const deleteHandler = (event) => {
+    //console.log(event.target)
+    const newData = data.filter((el, index) => {
+      //change id to number
+      return index !== parseInt(event.target.id)
+    })
+    //overwite with setData
+    setData(newData)
+  }
 
   return (
     <div className="container">
 
       {/* old card */}
-
       {/*
       <div className="card" id="card">
         <div id="text">
@@ -79,15 +83,17 @@ function App() {
       */}
 
       {/* new card */}
-      {data.map(el => (
+      {data.map((el, index) => (
         <div className="card" id="card">
         <div id="text">
           <p>{el.id}</p>
           <h2>{el.title}</h2>
           <p>{el.body}</p>
+          <button onClick={deleteHandler} id={index}>Delete</button>
         </div>
       </div>
       ))}
+
     </div>
   );
 }
